@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/naman23/teabiz-ai/backend/venv
+set -gx VIRTUAL_ENV /home/naman/projects/IntelliBrew-AI-Dashboard/backend/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

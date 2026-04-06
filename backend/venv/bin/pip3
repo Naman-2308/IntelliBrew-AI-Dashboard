@@ -1,4 +1,4 @@
-#!/home/naman23/teabiz-ai/backend/venv/bin/python3
+#!/home/naman/projects/IntelliBrew-AI-Dashboard/backend/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

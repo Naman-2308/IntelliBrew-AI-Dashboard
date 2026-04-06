@@ -22,11 +22,16 @@ class Sale(db.Model):
     product = db.relationship("Product")
 
     def to_dict(self):
+        cost_per_kg = 0.0
+        if self.product is not None:
+            cost_per_kg = self.product.cost_per_kg or 0.0
+        profit = self.total_price - (cost_per_kg * self.quantity_kg)
         return {
             "id": self.id,
             "product_id": self.product_id,
             "quantity_kg": self.quantity_kg,
             "total_price": self.total_price,
-            "created_at": self.created_at.isoformat()
+            "profit": round(profit, 2),
+            "created_at": self.created_at.isoformat(),
         }
 

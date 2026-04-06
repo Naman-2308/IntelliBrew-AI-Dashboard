@@ -1,5 +1,6 @@
 import { Package, AlertTriangle } from "lucide-react";
 import type { Product } from "@/hooks/useTeaApi";
+import { cn } from "@/lib/utils";
 
 interface ProductsTableProps {
   products: Product[];
@@ -8,11 +9,11 @@ interface ProductsTableProps {
 
 const ProductsTable = ({ products, loading }: ProductsTableProps) => {
   return (
-    <div className="bg-card rounded-xl card-shadow animate-slide-up stagger-2">
+    <div className="bg-card rounded-xl card-shadow border border-border/60 animate-slide-up stagger-2">
       <div className="px-6 py-4 border-b border-border flex items-center gap-2">
         <Package className="w-5 h-5 text-primary" />
         <h2 className="font-display text-lg font-semibold text-card-foreground">
-          Products & Stock
+          Products & stock
         </h2>
         <span className="ml-auto text-xs font-body bg-secondary text-muted-foreground px-2.5 py-1 rounded-full">
           {products.length} items
@@ -50,7 +51,10 @@ const ProductsTable = ({ products, loading }: ProductsTableProps) => {
               ))
             ) : products.length === 0 ? (
               <tr>
-                <td colSpan={4} className="px-6 py-12 text-center text-muted-foreground font-body">
+                <td
+                  colSpan={4}
+                  className="px-6 py-12 text-center text-muted-foreground font-body"
+                >
                   No products yet. Add your first product below.
                 </td>
               </tr>
@@ -58,10 +62,20 @@ const ProductsTable = ({ products, loading }: ProductsTableProps) => {
               products.map((p) => (
                 <tr
                   key={p.id}
-                  className="border-b border-border/50 hover:bg-secondary/30 transition-colors"
+                  className={cn(
+                    "border-b border-border/50 hover:bg-secondary/30 transition-colors",
+                    p.low_stock && "bg-destructive/[0.04]"
+                  )}
                 >
                   <td className="px-6 py-4 font-body font-medium text-card-foreground">
-                    {p.name}
+                    <span className="inline-flex items-center gap-2">
+                      {p.low_stock && (
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-destructive/10">
+                          <AlertTriangle className="w-3.5 h-3.5 text-destructive" />
+                        </span>
+                      )}
+                      {p.name}
+                    </span>
                   </td>
                   <td className="px-6 py-4">
                     <span className="inline-block bg-tea-green-light text-primary text-xs font-body font-medium px-2.5 py-1 rounded-full">
@@ -72,18 +86,14 @@ const ProductsTable = ({ products, loading }: ProductsTableProps) => {
                     ₹ {p.price_per_kg}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      {p.low_stock && (
-                        <AlertTriangle className="w-4 h-4 text-destructive" />
+                    <span
+                      className={cn(
+                        "font-body font-bold tabular-nums",
+                        p.low_stock ? "text-destructive" : "text-success"
                       )}
-                      <span
-                        className={`font-body font-bold ${
-                          p.low_stock ? "text-destructive" : "text-success"
-                        }`}
-                      >
-                        {p.stock_kg}
-                      </span>
-                    </div>
+                    >
+                      {p.stock_kg}
+                    </span>
                   </td>
                 </tr>
               ))

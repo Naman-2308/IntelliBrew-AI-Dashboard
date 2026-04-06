@@ -16,9 +16,9 @@ def add_product():
     product = Product(
         name=data["name"],
         category=data["category"],
-        price_per_kg=data["price_per_kg"],
-        cost_per_kg=data["cost_per_kg"],
-        stock_kg=data["stock_kg"]
+        price_per_kg=float(data["price_per_kg"]),
+        cost_per_kg=float(data.get("cost_per_kg") or 0),
+        stock_kg=float(data["stock_kg"]),
     )
 
     db.session.add(product)

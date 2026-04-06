@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ShoppingCart } from "lucide-react";
 import type { Product } from "@/hooks/useTeaApi";
+import DashboardCardHeader from "@/components/DashboardCardHeader";
 
 interface AddSaleFormProps {
   products: Product[];
@@ -25,18 +26,16 @@ const AddSaleForm = ({ products, onAddSale }: AddSaleFormProps) => {
   };
 
   return (
-    <div className="bg-card rounded-xl card-shadow animate-slide-up stagger-3">
-      <div className="px-6 py-4 border-b border-border flex items-center gap-2">
-        <ShoppingCart className="w-5 h-5 text-accent" />
-        <h2 className="font-display text-lg font-semibold text-card-foreground">
-          Record a Sale
-        </h2>
-      </div>
+    <div className="bg-card rounded-xl card-shadow border border-border/60 w-full h-full min-h-0 flex flex-col animate-slide-up stagger-3">
+      <DashboardCardHeader
+        icon={<ShoppingCart className="text-primary" />}
+        title="Record a sale"
+      />
 
-      <div className="p-6 space-y-4">
-        <div>
+      <div className="px-6 h-52 min-h-52 max-h-52 flex flex-col justify-center gap-2.5 box-border overflow-hidden">
+        <div className="min-h-0 shrink-0">
           <label className="block text-sm font-body font-medium text-card-foreground mb-1.5">
-            Select Product
+            Select product
           </label>
           <select
             value={productId}
@@ -52,9 +51,9 @@ const AddSaleForm = ({ products, onAddSale }: AddSaleFormProps) => {
           </select>
         </div>
 
-        <div>
+        <div className="min-h-0 shrink-0">
           <label className="block text-sm font-body font-medium text-card-foreground mb-1.5">
-            Quantity Sold (kg)
+            Quantity sold (kg)
           </label>
           <input
             type="number"
@@ -66,11 +65,12 @@ const AddSaleForm = ({ products, onAddSale }: AddSaleFormProps) => {
         </div>
 
         <button
+          type="button"
           onClick={handleSubmit}
           disabled={submitting || !productId || !quantity}
-          className="w-full h-11 rounded-lg tea-gradient text-primary-foreground font-body font-semibold text-sm hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+          className="w-full h-11 rounded-lg tea-gradient text-primary-foreground font-body font-semibold text-sm hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity shrink-0"
         >
-          {submitting ? "Recording…" : "Add Sale"}
+          {submitting ? "Recording…" : "Add sale"}
         </button>
       </div>
     </div>
